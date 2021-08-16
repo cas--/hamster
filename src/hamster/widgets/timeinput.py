@@ -64,7 +64,7 @@ class TimeInput(gtk.Entry):
         time_box.add(self.time_tree)
         self.popup.add(time_box)
 
-        self.set_icon_from_icon_name(gtk.EntryIconPosition.PRIMARY, "edit-clear-all-symbolic")
+        self.set_icon_from_icon_name(gtk.EntryIconPosition.SECONDARY, "edit-clear-all-symbolic")
 
         self.connect("icon-release", self._on_icon_release)
         self.connect("button-press-event", self._on_button_press_event)
@@ -278,13 +278,13 @@ class TimeInput(gtk.Entry):
 
         model, iter = self.time_tree.get_selection().get_selected()
         if not iter:
-            return
+            model = None
 
 
-        i = model.get_path(iter)[0]
-        if event.keyval == gdk.KEY_Up:
+        i = model.get_path(iter)[0] if model else 0
+        if model and event.keyval == gdk.KEY_Up:
             i-=1
-        elif event.keyval == gdk.KEY_Down:
+        elif model and event.keyval == gdk.KEY_Down:
             i+=1
         elif (event.keyval == gdk.KEY_Return or
               event.keyval == gdk.KEY_KP_Enter):

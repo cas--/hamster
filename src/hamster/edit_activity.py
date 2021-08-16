@@ -266,6 +266,7 @@ class CustomFactController(Controller):
             else:
                 new_start_time = None
             self.fact.start_time = new_start_time
+            self.end_time.set_start_time(new_start_time)
             # let start_date extract date or handle None
             self.start_date.date = new_start_time
             self.validate_fields()
